@@ -3,11 +3,6 @@ Created on 15-May-2023
 
 @author: raraj
 '''
-import albumentations as A
-import os
-import json
-import cv2
-
 class KP_augmentation():
     def __init__(self):
         self.augmentor = A.Compose([A.RandomBrightness(p=0.5),
@@ -31,7 +26,7 @@ class KP_augmentation():
             with open(os.path.join(label_dir,label)) as f:
                 annot = json.load(f)
                 stuff = annot['shapes']
-                img_path = os.path.join(root_dir,'data', annot['imagePath'][3:])
+                img_path = os.path.join('/',root_dir,'data', 'image',f'{label.split(".")[0]}.jpg')
                 img = cv2.imread(img_path)
                 if len(stuff)>1:
                     coords = [tuple(stuff[0]['points'][0]),tuple(stuff[1]['points'][0])]
