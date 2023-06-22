@@ -23,11 +23,12 @@ class KP_augmentation():
     
     def aug_pl(self, label_dir):
         labels = os.listdir(label_dir)
+        root_dir = label_dir.split("/")[0]
         for label in labels:
             with open(os.path.join(label_dir,label)) as f:
                 annot = json.load(f)
                 stuff = annot['shapes']
-                img_path = os.path.join('data', annot['imagePath'][3:])
+                img_path = os.path.join(root_dir,'data', annot['imagePath'][3:])
                 img = cv2.imread(img_path)
                 if len(stuff)>1:
                     coords = [tuple(stuff[0]['points'][0]),tuple(stuff[1]['points'][0])]
@@ -42,5 +43,5 @@ class KP_augmentation():
                     annotation['points']=new_aug['keypoints']
                     annotation['labels']=new_aug['class_labels']
                     cv2.imwrite(f'{img_path.split(".")[0]}_{i}.jpg',new_aug['image'])
-                    with open(os.path.join('data','label',f'{img_path.split(".")[0]}_{i}.json'), 'w') as o:
+                    with open(os.path.join(root_dir,'data','label',f'{img_path.split(".")[0]}_{i}.json'), 'w') as o:
                         json.dump(annotation,o)
