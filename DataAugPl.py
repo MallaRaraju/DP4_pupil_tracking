@@ -13,7 +13,7 @@ class KP_augmentation():
         self.augmentor = A.Compose([A.RandomBrightness(p=0.5),
                         A.RandomContrast(p=0.5),
                         A.RandomGamma(p=0.2),
-                        A.RandomGravel(p=0.1),
+                        A.RandomFog(p=0.1),
                         A.RandomRain(p=0.3),
                         A.RandomToneCurve(p=0.3),
                         A.HorizontalFlip(p=0.5),
