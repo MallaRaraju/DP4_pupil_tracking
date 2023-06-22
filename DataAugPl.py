@@ -39,6 +39,8 @@ class KP_augmentation():
                 else:
                     coords = [tuple(stuff[0]['points'][0])]
                     classes = [stuff[0]['label']]
+                os.remove(img_path)
+                os.remove(os.path.join(label_dir,label))
                 for i in range(60):
                     annotation = {}
                     new_aug = self.augmentor(image=img,keypoints=coords,class_labels=classes)
