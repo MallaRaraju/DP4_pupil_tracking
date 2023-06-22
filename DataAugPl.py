@@ -23,7 +23,10 @@ class KP_augmentation():
     
     def aug_pl(self, label_dir):
         labels = os.listdir(label_dir)
-        root_dir = label_dir.split("/")[0]
+        if len(label_dir.split("/")[0])>0:
+            root_dir = label_dir.split("/")[0]
+        else:
+            root_dir = label_dir.split("/")[1]
         for label in labels:
             with open(os.path.join(label_dir,label)) as f:
                 annot = json.load(f)
