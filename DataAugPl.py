@@ -44,5 +44,3 @@ class KP_augmentation():
                     cv2.imwrite(f'{img_path.split(".")[0]}_{i}.jpg',new_aug['image'])
                     with open(os.path.join('data','label',f'{img_path.split(".")[0]}_{i}.json'), 'w') as o:
                         json.dump(annotation,o)
-call = KP_augmentation()
-call.aug_pl(os.path.join('data','label'))
