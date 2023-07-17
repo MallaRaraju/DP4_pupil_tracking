@@ -11,18 +11,15 @@ import os
 class KP_augmentation():
     def __init__(self):
         self.augmentor = A.Compose([A.RandomBrightness(p=0.5),
-                        A.RandomContrast(p=0.5),
-                        A.RandomGamma(p=0.2),
-                        A.RandomFog(p=0.1),
-                        A.RandomRain(p=0.3),
-                        A.RandomToneCurve(p=0.3),
-                        A.HorizontalFlip(p=0.5),
-                        A.VerticalFlip(p=0.5),
-                        A.RandomRotate90(p=0.3),
-                        A.augmentations.geometric.transforms.Affine(p=0.3,scale=[0.25,0.75]),
-                        A.augmentations.geometric.transforms.Affine(p=0.3,scale=[1.25,1.75]),
-                        A.augmentations.geometric.transforms.Affine(p=0.3,rotate=[-15,15]) ],
-                       keypoint_params=A.KeypointParams(format='xy', label_fields=['point_labels','image_labels' ]),)
+                    A.RandomContrast(p=0.5),
+                    A.RandomGamma(p=0.2),
+                    A.HorizontalFlip(p=0.3),
+                    A.VerticalFlip(p=0.3),
+                    A.RandomRotate90(p=0.3),
+                    A.augmentations.geometric.transforms.Affine(p=0.3,scale=[0.25,0.75]),
+                    A.augmentations.geometric.transforms.Affine(p=0.3,scale=[1.25,1.75]),
+                    A.augmentations.geometric.transforms.Affine(p=0.3,rotate=[-15,15]) ],
+                   keypoint_params=A.KeypointParams(format='xy', label_fields=['point_labels','image_labels']))
     
     def aug_pl(self, label_dir):
         labels = os.listdir(label_dir)
