@@ -23,6 +23,7 @@ class KP_augmentation():
     
     def aug_pl(self, label_dir, image_dir):
         labels = os.listdir(label_dir)
+        count=0
         for label in labels:
             with open(os.path.join(label_dir,label)) as f:
                 annot = json.load(f)
@@ -37,7 +38,6 @@ class KP_augmentation():
                 coords = [tuple(stuff[0]['points'][0])]
                 classes = [stuff[0]['label']]
                 img_type = [stuff[1]['label']]
-            count=0
             for i in range(60):
                 try:
                     annotation = {}
