@@ -48,11 +48,12 @@ class KP_augmentation():
                     annotation = {}
                     new_aug = self.augmentor(image=img,keypoints=coords,point_labels=classes, image_labels = img_type)
                     if not len(new_aug['keypoints'])==0:
-                        annotation['image']=f'{img_path.split(".")[0]}_{i}.jpg'
-                        annotation['points']=new_aug['keypoints']
-                        annotation['point_labels']=new_aug['point_labels']
-                        annotation['image_label']=new_aug['image_labels'][0]
+                         if len(new_aug['point_labels'])==1:
+                            temp = [{'label':new_aug['point_labels'][0],'points':[new_aug['keypoints'][0]]}, {'label':new_aug['image_labels'][0]}]
+                         elif len(new_aug['point_labels'])==2:
+                            temp = [{'label':new_aug['point_labels'][0],'points':[new_aug['keypoints'][0]]}, {'label':new_aug['point_labels'][1],'points':[new_aug['keypoints'][1]]}, {'label':new_aug['image_labels'][0]}]
                         cv2.imwrite(f'{img_path.split(".")[0]}_augmented_{i}.jpg',new_aug['image'])
+                        annotation.update({'shapes': temp})
                         with open(os.path.join(label_dir, f'{label.split(".")[0]}_augmented_{i}.json'), 'w') as o:
                             json.dump(annotation,o)
                 except Exception as e:
