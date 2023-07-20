@@ -39,7 +39,7 @@ class KP_augmentation():
                 img_type = [stuff[1]['label']]
             for i in range(60):
                 annotation = {}
-                new_aug = augmentor(image=img,keypoints=coords,point_labels=classes, image_labels = img_type)
+                new_aug = self.augmentor(image=img,keypoints=coords,point_labels=classes, image_labels = img_type)
                 if not len(new_aug['keypoints'])==0:
                     annotation['image']=f'{img_path.split(".")[0]}_{i}.jpg'
                     annotation['points']=new_aug['keypoints']
