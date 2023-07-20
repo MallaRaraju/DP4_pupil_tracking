@@ -53,4 +53,4 @@ class KP_augmentation():
                 except Exception as e:
                     print(f'{e} occured at Image: {label.split(".")[0]}.jpg')
                     count+=1
-    print(f'{count} images were missed')
+        print(f'{count} images were missed')
