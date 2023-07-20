@@ -53,7 +53,7 @@ class KP_augmentation():
                         annotation['point_labels']=new_aug['point_labels']
                         annotation['image_label']=new_aug['image_labels'][0]
                         cv2.imwrite(f'{img_path.split(".")[0]}_augmented_{i}.jpg',new_aug['image'])
-                        with open(os.path.join(label_dir, f'{label.split(".")[0]}_augmentged_{i}.json'), 'w') as o:
+                        with open(os.path.join(label_dir, f'{label.split(".")[0]}_augmented_{i}.json'), 'w') as o:
                             json.dump(annotation,o)
                 except Exception as e:
                     print(f'{e} occured at Image: {label.split(".")[0]}.jpg')
