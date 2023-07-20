@@ -25,19 +25,24 @@ class KP_augmentation():
         labels = os.listdir(label_dir)
         count=0
         for label in labels:
-            with open(os.path.join(label_dir,label)) as f:
-                annot = json.load(f)
-                stuff = annot['shapes']
-                img_path = os.path.join(image_dir,f'{label.split(".")[0]}.jpg')
-                img = cv2.imread(img_path)
-            if len(stuff)>2:
-                coords = [tuple(stuff[0]['points'][0]),tuple(stuff[1]['points'][0])]
-                classes = [stuff[0]['label'], stuff[1]['label']]
-                img_type = [stuff[2]['label'],stuff[2]['label']]
-            else:
-                coords = [tuple(stuff[0]['points'][0])]
-                classes = [stuff[0]['label']]
-                img_type = [stuff[1]['label']]
+            try:
+                with open(os.path.join(label_dir,label)) as f:
+                    annot = json.load(f)
+                    stuff = annot['shapes']
+                    img_path = os.path.join(image_dir,f'{label.split(".")[0]}.jpg')
+                    img = cv2.imread(img_path)
+                if len(stuff)>2:
+                    coords = [tuple(stuff[0]['points'][0]),tuple(stuff[1]['points'][0])]
+                    classes = [stuff[0]['label'], stuff[1]['label']]
+                    img_type = [stuff[2]['label'],stuff[2]['label']]
+                else:
+                    coords = [tuple(stuff[0]['points'][0])]
+                    classes = [stuff[0]['label']]
+                    img_type = [stuff[1]['label']]
+            except Exception as e:
+                print(f'{e} occured at Image: {label.split(".")[0]}.jpg')
+                count+=1
+                continue
             for i in range(60):
                 try:
                     annotation = {}
@@ -53,4 +58,5 @@ class KP_augmentation():
                 except Exception as e:
                     print(f'{e} occured at Image: {label.split(".")[0]}.jpg')
                     count+=1
+                    continue
         print(f'{count} images were missed')
