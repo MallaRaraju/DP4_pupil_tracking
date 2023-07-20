@@ -37,14 +37,20 @@ class KP_augmentation():
                 coords = [tuple(stuff[0]['points'][0])]
                 classes = [stuff[0]['label']]
                 img_type = [stuff[1]['label']]
+            count=0
             for i in range(60):
-                annotation = {}
-                new_aug = self.augmentor(image=img,keypoints=coords,point_labels=classes, image_labels = img_type)
-                if not len(new_aug['keypoints'])==0:
-                    annotation['image']=f'{img_path.split(".")[0]}_{i}.jpg'
-                    annotation['points']=new_aug['keypoints']
-                    annotation['point_labels']=new_aug['point_labels']
-                    annotation['image_label']=new_aug['image_labels'][0]
-                    cv2.imwrite(f'{img_path.split(".")[0]}_augmented_{i}.jpg',new_aug['image'])
-                    with open(os.path.join(label_dir, f'{label.split(".")[0]}_augmentged_{i}.json'), 'w') as o:
-                        json.dump(annotation,o)
+                try:
+                    annotation = {}
+                    new_aug = self.augmentor(image=img,keypoints=coords,point_labels=classes, image_labels = img_type)
+                    if not len(new_aug['keypoints'])==0:
+                        annotation['image']=f'{img_path.split(".")[0]}_{i}.jpg'
+                        annotation['points']=new_aug['keypoints']
+                        annotation['point_labels']=new_aug['point_labels']
+                        annotation['image_label']=new_aug['image_labels'][0]
+                        cv2.imwrite(f'{img_path.split(".")[0]}_augmented_{i}.jpg',new_aug['image'])
+                        with open(os.path.join(label_dir, f'{label.split(".")[0]}_augmentged_{i}.json'), 'w') as o:
+                            json.dump(annotation,o)
+                except Exception as e:
+                    print(f'{e} occured at Image: {label.split(".")[0]}.jpg')
+                    count+=1
+    print(f'{count} were missed')
